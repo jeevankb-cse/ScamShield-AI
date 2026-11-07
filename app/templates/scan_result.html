@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}Scan Assessment #{{ scan.id }} - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 960px;">
+
+  <!-- Header & Back Navigation -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+    <div>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+        <a href="{{ url_for('scan.scan_page') }}" style="color: var(--text-dim); font-size: 0.88rem;">&larr; Return to Scanner</a>
+        <span style="color: var(--text-dim);">&bull;</span>
+        <span style="color: var(--text-muted); font-size: 0.88rem;">Scan #{{ scan.id }}</span>
+      </div>
+      <h1 style="font-size: 1.8rem;">Risk Assessment Report</h1>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <button class="btn btn-secondary btn-sm" onclick="window.print()">
+        &#128438; Print / Export PDF
+      </button>
+      <a href="{{ url_for('scan.scan_page') }}" class="btn btn-primary btn-sm">
+        + Scan Another Item
+      </a>
+    </div>
+  </div>
+
+  <!-- Primary Score Banner Card -->
+  <div class="glass-card" style="margin-bottom: 24px; padding: 32px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 28px;">
+
+      <!-- Risk Meter Gauge -->
+      <div style="text-align: center; flex: 0 0 160px; margin: 0 auto;">
+        <div class="risk-meter">
+          {% set score = result.risk_score %}
+          {% set circumference = 440 %}
+          {% set stroke_dashoffset = circumference - (circumference * score / 100) %}
+
+          {% if score >= 80 %}
+            {% set stroke_color = "var(--risk-critical)" %}
+            {% set text_color = "#f87171" %}
+          {% elif score >= 60 %}
+            {% set stroke_color = "var(--risk-high)" %}
+            {% set text_color = "#fb923c" %}
+          {% elif score >= 30 %}
+            {% set stroke_color = "var(--risk-med)" %}
+            {% set text_color = "#fbbf24" %}
+          {% else %}
+            {% set stroke_color = "var(--risk-low)" %}
+            {% set text_color = "#34d399" %}
+          {% endif %}
+
+          <svg class="risk-circle-svg" viewBox="0 0 160 160">
+            <circle class="risk-circle-bg" cx="80" cy="80" r="70"></circle>
+            <circle class="risk-circle-val" cx="80" cy="80" r="70"
+                    stroke="{{ stroke_color }}"
+                    stroke-dasharray="440"
+                    stroke-dashoffset="{{ stroke_dashoffset }}"></circle>
+          </svg>
+          <div class="risk-meter-content">
+            <div class="risk-score-num" style="color: {{ text_color }};">{{ score }}</div>
+            <div class="risk-score-total">/ 100</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Details -->
+      <div style="flex: 1; min-width: 280px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+          {% if score >= 80 %}
+            <span class="badge badge-critical" style="font-size: 0.9rem; padding: 6px 14px;">Very High Risk</span>
+          {% elif score >= 60 %}
+            <span class="badge badge-high" style="font-size: 0.9rem; padding: 6px 14px;">High Risk</span>
+          {% elif score >= 30 %}
+            <span class="badge badge-medium" style="font-size: 0.9rem; padding: 6px 14px;">Medium Risk</span>
+          {% else %}
+            <span class="badge badge-low" style="font-size: 0.9rem; padding: 6px 14px;">Low Risk</span>
+          {% endif %}
+
+          <span style="font-size: 0.85rem; color: var(--text-dim);">
+            Input Type: <strong>{{ scan.scan_type.replace('_', ' ').capitalize() }}</strong>
+          </span>
+        </div>
+
+        <h2 style="font-size: 1.5rem; margin-bottom: 8px; color: #fff;">
+          {{ result.predicted_category }}
+        </h2>
+
+        <div style="display: flex; gap: 24px; font-size: 0.85rem; color: var(--text-muted); margin-top: 14px; flex-wrap: wrap;">
+          <div>Timestamp: <strong>{{ scan.created_at.strftime('%Y-%m-%d %H:%M:%S UTC') }}</strong></div>
+          <div>Model Version: <strong>{{ result.model_version }}</strong></div>
+          <div>Confidence: <strong>{{ (result.confidence * 100)|round(1) }}%</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Submitted Content Preview -->
+  <div class="glass-card" style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.05rem; margin-bottom: 10px; color: var(--cyan-light);">Submitted Content Preview</h3>
+    <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; color: #e2e8f0; white-space: pre-wrap; word-break: break-all;">
+      {{ scan.input_preview }}
+    </div>
+  </div>
+
+  <!-- Narrative Explanation -->
+  <div class="glass-card" style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--cyan-light);">Analysis Explanation</h3>
+    <p style="color: var(--text-main); font-size: 0.95rem; line-height: 1.7;">
+      {{ result.explanation }}
+    </p>
+  </div>
+
+  <!-- Warning Evidence & Indicators -->
+  <div class="glass-card" style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.05rem; margin-bottom: 16px; color: var(--cyan-light);">Detected Warning Signs & Evidence</h3>
+    {% if result.evidence_items %}
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        {% for ev in result.evidence_items %}
+          <div style="display: flex; align-items: flex-start; gap: 14px; padding: 12px 16px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+            {% if ev.severity == 'critical' %}
+              <span class="badge badge-critical" style="flex-shrink:0;">Critical</span>
+            {% elif ev.severity == 'high' %}
+              <span class="badge badge-high" style="flex-shrink:0;">High</span>
+            {% elif ev.severity == 'medium' %}
+              <span class="badge badge-medium" style="flex-shrink:0;">Medium</span>
+            {% else %}
+              <span class="badge badge-low" style="flex-shrink:0;">Low</span>
+            {% endif %}
+
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 0.9rem; color: #fff; margin-bottom: 2px;">
+                {{ ev.evidence_description }}
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-dim); text-transform: uppercase;">
+                Classification Factor: {{ ev.evidence_type.replace('_', ' ') }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="color: var(--text-muted); font-size: 0.9rem;">
+        No high-risk malicious signals or coercive patterns were discovered during inspection.
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Recommended Safety Actions -->
+  <div class="glass-card" style="margin-bottom: 24px;">
+    <h3 style="font-size: 1.05rem; margin-bottom: 14px; color: var(--cyan-light);">Recommended Next Safety Actions</h3>
+    <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+      {% for rec in result.get_recommendations_list() %}
+        <li style="display: flex; align-items: flex-start; gap: 12px; color: var(--text-main); font-size: 0.92rem;">
+          <span style="color: var(--cyan-light); font-weight: bold;">&#10003;</span>
+          <span>{{ rec }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Legal & Assessment Disclaimer -->
+  <div style="text-align: center; color: var(--text-dim); font-size: 0.8rem; line-height: 1.6; margin-top: 16px;">
+    <strong>Disclaimer:</strong> This automated scan is a risk assessment derived from statistical classifiers and heuristic rules.
+    It does not constitute legal certification or absolute proof of fraud. For urgent incidents, contact the National Cybercrime Portal at <strong>1930</strong>.
+  </div>
+
+</div>
+{% endblock %}

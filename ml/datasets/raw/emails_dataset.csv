@@ -1,0 +1,26 @@
+# DATASET METADATA: Email Phishing and Legitimate Dataset
+# Version: 1.0.0
+# License: CC0 / Public Domain
+# Columns: sender, subject, body, label, category
+
+sender,subject,body,label,category
+"newsletter@github.com","Your GitHub daily digest","Here are the trending repositories and notifications from your watched repositories.",0,Legitimate
+"support@zoom.us","Scheduled meeting reminder","Your weekly team standup meeting starts in 15 minutes. Click here to join the call.",0,Legitimate
+"orders@amazon.in","Your order has been dispatched","Your order #402-9182371 has been shipped via ATS and is scheduled to arrive tomorrow.",0,Legitimate
+"no-reply@incometax.gov.in","Intimation under Section 143(1)","Your income tax return for Assessment Year 2025-26 has been successfully processed.",0,Legitimate
+"notifications@linkedin.com","You appeared in 12 searches this week","See who is looking at your profile and expand your professional network today.",0,Legitimate
+"billing@digitalocean.com","Your monthly invoice is ready","Your invoice for the period October 1 - October 31 is ready for viewing in your account portal.",0,Legitimate
+"hr@company.internal","Company Holiday Schedule 2026","Please find the updated list of official corporate and optional holidays for the upcoming calendar year.",0,Legitimate
+"service@sbi.co.in","SBI Netbanking Monthly Statement","Your e-statement for the month is attached with password protection as per RBI standards.",0,Legitimate
+"alerts@hdfcbank.com","HDFC Bank: Daily Transaction Alert","Your account was debited for Rs 320 at Metro Station via UPI on 05-Nov-2026.",0,Legitimate
+"community@python.org","Python Software Foundation Newsletter","Welcome to this month's roundup of Python community developments, PyCon updates, and PEP discussions.",0,Legitimate
+"alert@sbi-online-security.com","Action Required: Your SBI NetBanking Access is Blocked","Dear customer, your online access was locked due to abnormal login attempts. Click here immediately to verify your profile credentials and debit card details: http://sbi-secure-portal.xyz/verify",1,Fake KYC updates
+"refund@incometax-gov-in.biz","Notice: Unclaimed Tax Refund of Rs 48,290 Waiting","Dear Taxpayer, we have approved a tax refund of Rs 48,290. You have only 24 hours to confirm your bank account and debit card CVV or the refund will be cancelled: http://tax-refund-portal.org/claim",1,Refund scams
+"hr-recruitment@amazon-careers-india.tech","Job Offer: Part-time Assistant (Rs 5,000/day)","Congratulations! You have been selected for remote product review job. Earn Rs 5,000 to Rs 15,000 daily with immediate daily UPI payout. Send Rs 999 registration fee to start.",1,Fake job offers
+"security@paypal-verification-center.cc","Urgent: Unauthorized Transaction Detected","Your account was accessed from an unrecognized device in Netherlands. A payment of $890 USD was initiated. Click http://paypal-dispute-security.co to dispute within 2 hours.",1,Phishing attacks
+"customs@fedex-courier-alert.in","Urgent Notice: Illegal Contraband Package Seized","A parcel containing illegal narcotics and fake passports in your name has been intercepted by Narcotics Control Bureau. You are placed under digital arrest. Join Skype call now.",1,Digital arrest threats
+"lottery@kbc-headquarters.site","Congratulations! You won Rs 50 Lakhs in KBC Draw","Your email was chosen as the 1st prize winner of KBC Season 16 Lucky draw. Contact our cash officer Mr. Verma on WhatsApp to claim your prize cheque.",1,Lottery and prize scams
+"support@google-account-security-alert.ml","Critical Security Warning: Password Compromised","Someone knows your Google account password and attempted to sign in. Click http://google-security-verify.org to secure your account and verify your two-factor OTP.",1,OTP and PIN harvesting
+"approval@quick-rupee-loan-app.top","Pre-Approved Loan: Rs 3,00,000 Ready for Disbursal","Get instant paperless loan in 3 minutes. Zero CIBIL check. Install our special loan APK now: http://instant-cash-india.buzz/download",1,Loan scams
+"admin@tneb-power-bill.club","Urgent: Electricity Power Disconnection Tonight","Dear consumer, your power will be cut tonight at 9:30 PM by order of Electricity Board due to non-payment. Call electricity officer at 9876543210 immediately.",1,Phishing attacks
+"verification@kyc-paytm-wallet.online","Urgent Notice: Wallet Deactivation within 6 Hours","Your wallet does not meet RBI revised KYC guidelines. To prevent immediate deactivation and funds freeze, click http://paytm-wallet-update.net",1,Fake KYC updates

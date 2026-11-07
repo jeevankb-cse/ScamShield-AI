@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Multi-Input Scam Scanner - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 900px;">
+
+  <!-- Header -->
+  <div style="text-align: center; margin-bottom: 32px;">
+    <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Multi-Input Threat Scanner</h1>
+    <p style="color: var(--text-muted); font-size: 0.95rem;">
+      Submit messages, emails, links, screenshots, or invoices for automated risk analysis
+    </p>
+  </div>
+
+  <!-- Dynamic Scanner Alert Area -->
+  <div id="scanner-alert-area"></div>
+
+  <!-- Main Scanner Card -->
+  <div class="glass-card" style="padding: 32px;">
+
+    <!-- Tabs Header -->
+    <div class="tabs-header">
+      <button class="tab-btn {% if active_tab == 'message' %}active{% endif %}" data-tab="message">
+        &#9993; Message Scanner
+      </button>
+      <button class="tab-btn {% if active_tab == 'email' %}active{% endif %}" data-tab="email">
+        &#128231; Email Scanner
+      </button>
+      <button class="tab-btn {% if active_tab == 'url' %}active{% endif %}" data-tab="url">
+        &#127760; URL Scanner
+      </button>
+      <button class="tab-btn {% if active_tab == 'image' %}active{% endif %}" data-tab="image">
+        &#128247; Screenshot Scanner
+      </button>
+      <button class="tab-btn {% if active_tab == 'pdf' %}active{% endif %}" data-tab="pdf">
+        &#128196; PDF Invoice Scanner
+      </button>
+    </div>
+
+    <!-- TAB 1: SMS / WhatsApp Message Scanner -->
+    <div class="tab-content {% if active_tab == 'message' %}active{% endif %}" id="tab-message">
+      <form id="form-message-scan">
+        <div class="form-group">
+          <label class="form-label">Message Content (SMS, WhatsApp, Telegram, Chat)</label>
+          <textarea id="msg-input" name="text" class="form-control" rows="5" placeholder="Paste the suspicious message text here..." required></textarea>
+        </div>
+
+        <!-- Sample buttons for testing -->
+        <div style="margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--text-dim);">Quick Samples:</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('msg-input').value = 'Dear customer, your SBI account 4819 is blocked due to missing PAN. Click http://sbi-pan-update.in to verify immediately or your debit card will be frozen.'">
+            SBI PAN KYC Scam
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('msg-input').value = 'PhonePe Reward: You won scratch card reward of Rs 7,500. Enter your UPI PIN on http://phonepe-rewards-claim.org to accept money.'">
+            UPI PIN Reward Scam
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('msg-input').value = 'CBI Officer Notice: You are placed under digital arrest for money laundering. Connect to Skype video call immediately.'">
+            Digital Arrest Threat
+          </button>
+        </div>
+
+        <button type="submit" id="btn-scan-msg" class="btn btn-primary btn-block" style="padding: 12px;">
+          Analyze Message Content &rarr;
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 2: Email Scanner -->
+    <div class="tab-content {% if active_tab == 'email' %}active{% endif %}" id="tab-email">
+      <form id="form-email-scan">
+        <div class="form-group">
+          <label class="form-label">Sender Email Address (Optional)</label>
+          <input type="text" id="email-sender" name="sender" class="form-control" placeholder="e.g. alert@sbi-security-dept.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Subject Line</label>
+          <input type="text" id="email-subject" name="subject" class="form-control" placeholder="e.g. Action Required: Income Tax Refund of Rs 48,290 waiting" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Body</label>
+          <textarea id="email-body" name="body" class="form-control" rows="5" placeholder="Paste full email body text..." required></textarea>
+        </div>
+
+        <!-- Sample button -->
+        <div style="margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--text-dim);">Quick Sample:</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="
+            document.getElementById('email-sender').value = 'tax-refund@incometax-gov-in.biz';
+            document.getElementById('email-subject').value = 'Urgent Notice: Unclaimed Tax Refund of Rs 48,290 Waiting';
+            document.getElementById('email-body').value = 'Dear Taxpayer,\n\nWe have approved a tax refund of Rs 48,290 for AY 2025-26. You have only 24 hours to confirm your bank account and debit card CVV at http://tax-refund-portal.org/claim or the funds will revert.';
+          ">
+            Income Tax Refund Phishing
+          </button>
+        </div>
+
+        <button type="submit" id="btn-scan-email" class="btn btn-primary btn-block" style="padding: 12px;">
+          Analyze Email Headers & Body &rarr;
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 3: URL Scanner -->
+    <div class="tab-content {% if active_tab == 'url' %}active{% endif %}" id="tab-url">
+      <form id="form-url-scan">
+        <div class="form-group">
+          <label class="form-label">Website URL</label>
+          <input type="text" id="url-input" name="url" class="form-control" placeholder="https://example.com/login or http://192.168.1.1/paytm-kyc" required>
+          <small style="color: var(--text-dim); display: block; margin-top: 6px;">
+            &#128274; SSRF-Protected: The scanner inspects structural and lexical features. Untrusted URLs are never fetched or executed on the server.
+          </small>
+        </div>
+
+        <!-- Sample button -->
+        <div style="margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--text-dim);">Quick Samples:</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('url-input').value = 'http://192.168.1.105/login-sbi/verification.php'">
+            Raw IP SBI Phishing
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('url-input').value = 'http://paytm-refund-cashback-2026.top/claim.php'">
+            Suspicious TLD Cashback
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('url-input').value = 'https://www.sbi.co.in'">
+            Legitimate Domain
+          </button>
+        </div>
+
+        <button type="submit" id="btn-scan-url" class="btn btn-primary btn-block" style="padding: 12px;">
+          Inspect Lexical URL Features &rarr;
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 4: Screenshot / Image Scanner -->
+    <div class="tab-content {% if active_tab == 'image' %}active{% endif %}" id="tab-image">
+      <form id="form-image-scan" enctype="multipart/form-data">
+        <div class="form-group">
+          <label class="form-label">Upload Screenshot or Image (JPG, JPEG, PNG, WEBP &bull; Max 16MB)</label>
+          <div class="dropzone" onclick="document.getElementById('image-file-input').click();">
+            <div class="dropzone-icon">&#128247;</div>
+            <div style="font-weight: 600; margin-bottom: 4px;" id="image-dropzone-text">Click or drag & drop screenshot here</div>
+            <div style="color: var(--text-dim); font-size: 0.8rem;">Supports WhatsApp chats, SMS captures, banking app popups</div>
+          </div>
+          <input type="file" id="image-file-input" name="file" accept=".jpg,.jpeg,.png,.webp" style="display:none;" required>
+        </div>
+
+        <button type="submit" id="btn-scan-image" class="btn btn-primary btn-block" style="padding: 12px;">
+          Extract Text via OCR & Analyze &rarr;
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 5: PDF Invoice Scanner -->
+    <div class="tab-content {% if active_tab == 'pdf' %}active{% endif %}" id="tab-pdf">
+      <form id="form-pdf-scan" enctype="multipart/form-data">
+        <div class="form-group">
+          <label class="form-label">Upload Target Invoice (PDF Format)</label>
+          <div class="dropzone" onclick="document.getElementById('pdf-file-input').click();">
+            <div class="dropzone-icon">&#128196;</div>
+            <div style="font-weight: 600; margin-bottom: 4px;" id="pdf-dropzone-text">Click to choose PDF Invoice</div>
+            <div style="color: var(--text-dim); font-size: 0.8rem;">Verifies GSTIN, arithmetic integrity, and payment modification risks</div>
+          </div>
+          <input type="file" id="pdf-file-input" name="file" accept=".pdf" style="display:none;" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Optional Reference / Historical Comparison Invoice (PDF)</label>
+          <input type="file" name="comparison_file" class="form-control" accept=".pdf">
+          <small style="color: var(--text-dim); display: block; margin-top: 4px;">
+            Optional: Compare against a prior trusted invoice from the same vendor to detect unauthorized bank account modifications.
+          </small>
+        </div>
+
+        <button type="submit" id="btn-scan-pdf" class="btn btn-primary btn-block" style="padding: 12px;">
+          Perform Invoice Risk Audit &rarr;
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Security Disclaimer Notice -->
+  <div style="margin-top: 24px; text-align: center; color: var(--text-dim); font-size: 0.82rem; line-height: 1.5;">
+    &#9888; <strong>Notice:</strong> ScamShield AI generates probabilistic risk assessments based on textual cues and heuristics.
+    Predictions are not definitive legal proof of fraud. Temporary uploaded files are permanently deleted after processing.
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+{% endblock %}

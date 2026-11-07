@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}403 Forbidden - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; text-align: center; padding: 60px 0;">
+  <div style="font-size: 4rem; font-weight: 800; color: var(--risk-critical); line-height: 1;">403</div>
+  <h1 style="font-size: 1.5rem; margin: 16px 0 8px;">Access Restricted</h1>
+  <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
+    You do not possess the required administrative clearance or authorization to access this security resource.
+  </p>
+  <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary">Return to Console</a>
+</div>
+{% endblock %}

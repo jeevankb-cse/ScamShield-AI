@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}400 Bad Request - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; text-align: center; padding: 60px 0;">
+  <div style="font-size: 4rem; font-weight: 800; color: var(--risk-high); line-height: 1;">400</div>
+  <h1 style="font-size: 1.5rem; margin: 16px 0 8px;">Invalid Request Payload</h1>
+  <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
+    The submitted input payload failed security validation or contained malformed syntax.
+  </p>
+  <a href="{{ url_for('scan.scan_page') }}" class="btn btn-primary">Return to Scanner</a>
+</div>
+{% endblock %}

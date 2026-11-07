@@ -1,0 +1,43 @@
+# DATASET METADATA & PROVENANCE
+# Source 1: Baseline UCI SMS Spam Collection (Public Domain / CC0)
+# Source 2: Supplementary Synthetic Indian Scam Dataset (Clearly labeled as synthetic examples for Indian scam vectors)
+# Version: 1.0.0
+# License: CC0 / MIT Compatible
+# Categories: Ham (Legitimate), Spam/Scam (Fake KYC, UPI Fraud, Job Scam, Loan Scam, Courier Scam, Digital Arrest, Lottery, General Spam)
+
+label,text,category
+ham,"Hey, are we still meeting today at the office for the project review?",Legitimate
+ham,"Please find attached the quarterly status report for your review.",Legitimate
+ham,"Mom called to ask if you want anything from the grocery market tonight.",Legitimate
+ham,"Your doctor appointment is confirmed for Tuesday at 3:30 PM with Dr. Sharma.",Legitimate
+ham,"Thanks for your help with the presentation slides yesterday, great job!",Legitimate
+ham,"I will be reaching home in about 20 minutes, see you soon.",Legitimate
+ham,"Could you please review the pull request on github when you get a chance?",Legitimate
+ham,"The team lunch is booked for Friday at 1 PM at the rooftop cafe.",Legitimate
+ham,"Reminder: Your dental checkup is scheduled for tomorrow at 11 AM.",Legitimate
+ham,"Hi, hope you are doing well. Let's catch up this weekend if you have time.",Legitimate
+ham,"Can you send over the updated contract draft before 5 PM today?",Legitimate
+ham,"Your package has been delivered to your doorstep. Thank you for shopping with us.",Legitimate
+ham,"The flight from Delhi to Mumbai has departed on time.",Legitimate
+ham,"Your monthly electricity bill of Rs 1,420 has been paid successfully.",Legitimate
+ham,"Welcome to our newsletter! You can unsubscribe at any time using the link below.",Legitimate
+spam,"Dear SBI user, your bank account has been suspended due to unverified PAN card. Update immediately at http://sbi-pan-kyc.in to prevent permanent blocking.",Fake KYC updates
+spam,"URGENT: Your HDFC netbanking will be locked within 12 hours. Complete your re-KYC by verifying your Aadhaar and OTP at http://hdfc-verify-portal.net",Fake KYC updates
+spam,"Dear customer, your Paytm wallet KYC expired. Please call 9876543210 or click http://paytm-kyc-desk.com to avoid account termination.",Fake KYC updates
+spam,"Airtel alert: Your SIM card will be deactivated in 24 hours due to non-KYC compliance. Contact our customer care immediately at 9123456789.",Fake KYC updates
+spam,"Congratulations! You have received a cashback of Rs 4,999 in your Google Pay account. Click http://gpay-cashback-claim.xyz to deposit into your bank now.",UPI payment fraud
+spam,"PhonePe Reward: You won scratch card reward of Rs 7,500. Enter your UPI PIN on http://phonepe-rewards-claim.org to accept money.",UPI payment fraud
+spam,"Alert: Rs 25,000 debited from your bank account via UPI. If not you, cancel transaction immediately by providing OTP at http://upi-cancel-dispute.online",UPI payment fraud
+spam,"Congratulations! Your resume is shortlisted for Part-time Amazon/Work-From-Home job. Earn Rs 3000-8000 daily. WhatsApp now at +919876501234 to join immediately.",Fake job offers
+spam,"Urgent hiring! Work from home as YouTube video liker. Earn Rs 500 per task. Join our Telegram channel t.me/fast_earn_india to get registration bonus.",Fake job offers
+spam,"Selected for international remote data entry job. Monthly salary $2500 USD. Pay refundable training kit fee of Rs 1,200 to secure slot.",Fake job offers
+spam,"Pre-approved personal loan of Rs 5,00,000 sanctioned at 1% interest rate without CIBIL score. Download fast loan APK app at http://quick-cash-loan-in.top",Loan scams
+spam,"Instant cash loan of Rs 50,000 transferred in 5 minutes! No documents required. Repay in 7 days or face legal action. Apply at http://instant-rupee-loan.club",Loan scams
+spam,"KBC Lucky Winner! Your mobile number won Rs 25 Lakhs in Kaun Banega Crorepati lucky draw. Contact manager Rana Pratap on WhatsApp +917890123456.",Lottery and prize scams
+spam,"Dear customer, your India Post parcel #IN9823419 could not be delivered due to incorrect address. Update delivery address within 24 hrs at http://indiapost-parcel-reschedule.com",Courier and delivery scams
+spam,"FedEx Courier Alert: A parcel containing illegal contraband (passports, drugs) seized at Mumbai Customs in your name. CBI warrant issued. Connect to Skype now for digital arrest.",Digital arrest threats
+spam,"POLICE CYBER CELL NOTICE: Your Aadhaar is implicated in multi-crore money laundering. Remain on this video call under Digital Arrest until clearance certificate fee is transferred.",Digital arrest threats
+spam,"Income tax refund of Rs 35,420 is approved. Refund will expire in 48 hours. Submit your Net Banking credentials and card CVV at http://incometax-refund-gov.in",Refund scams
+spam,"Dear customer, your electricity power will be disconnected tonight at 9:30 PM because previous month bill was not updated. Immediately contact our electricity officer.",Utility scam
+spam,"SECURITY ALERT: Your Google account password was reset from Russia. Verify your identity and 2FA OTP immediately at http://security-accounts-google.co",OTP and PIN harvesting
+spam,"Free recharge! Jio is offering free 84 days 5G recharge for all Indian citizens to celebrate new year. Click http://jio-free-5g-recharge.in to claim now.",Phishing attacks

@@ -1,0 +1,64 @@
+{
+  "model_type": "Random Forest",
+  "dataset": "Legitimate & Phishing URLs Curated Benchmark v1.0.0",
+  "train_samples": 30,
+  "test_samples": 10,
+  "feature_count": 15,
+  "features": [
+    "url_length",
+    "host_length",
+    "path_length",
+    "count_dots",
+    "count_hyphens",
+    "count_at",
+    "count_question",
+    "count_equal",
+    "count_slashes",
+    "count_digits",
+    "has_ip_address",
+    "num_subdomains",
+    "has_suspicious_tld",
+    "has_phish_keyword",
+    "is_https"
+  ],
+  "metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "confusion_matrix": {
+      "true_negatives": 5,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "true_positives": 5
+    },
+    "classification_report": {
+      "Legitimate": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5.0
+      },
+      "Phishing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5.0
+      },
+      "accuracy": 1.0,
+      "macro avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 10.0
+      },
+      "weighted avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 10.0
+      }
+    }
+  },
+  "model_version": "v1.0.0"
+}

@@ -1,0 +1,47 @@
+# DATASET METADATA: URL Phishing and Legitimate Baseline
+# Provenance: Curated benchmark containing legitimate high-traffic Indian/global domains and malicious phishing samples
+# Version: 1.0.0
+# License: CC0 / Public Domain
+# Columns: url, label (0=legitimate, 1=phishing), category
+
+url,label,category
+https://www.google.com,0,Legitimate
+https://www.github.com,0,Legitimate
+https://www.wikipedia.org,0,Legitimate
+https://www.sbi.co.in,0,Legitimate
+https://www.hdfcbank.com,0,Legitimate
+https://www.icicibank.com,0,Legitimate
+https://incometax.gov.in,0,Legitimate
+https://www.amazon.in,0,Legitimate
+https://www.flipkart.com,0,Legitimate
+https://www.python.org,0,Legitimate
+https://developer.mozilla.org/en-US/,0,Legitimate
+https://www.nytimes.com,0,Legitimate
+https://www.rbi.org.in,0,Legitimate
+https://uidai.gov.in,0,Legitimate
+https://www.irctc.co.in,0,Legitimate
+https://www.microsoft.com/en-us/,0,Legitimate
+https://stackoverflow.com/questions,0,Legitimate
+https://news.ycombinator.com,0,Legitimate
+https://www.bbc.com/news,0,Legitimate
+https://pypi.org/project/Flask/,0,Legitimate
+http://192.168.1.105/login-sbi/verification.php,1,Phishing attacks
+http://104.28.19.45/hdfc-netbanking-verify/,1,Phishing attacks
+http://sbi-pan-kyc-update.com/online/login.html,1,Fake KYC updates
+http://www.hdfc-bank-secure-login.xyz/portal/auth,1,Fake KYC updates
+http://paytm-refund-cashback-2026.top/claim.php,1,Refund scams
+http://gpay-reward-scratchcard.online/upi-pin.html,1,UPI payment fraud
+http://phonepe-gift-voucher-claim.site/verify,1,UPI payment fraud
+http://cbi-cybercell-digital-arrest.in/case-file.pdf.exe,1,Digital arrest threats
+http://amazon-job-shortlist-india.work/apply,1,Fake job offers
+http://instant-loan-50000-approval.buzz/apk/download,1,Loan scams
+http://indiapost-parcel-redelivery-notice.info/reschedule,1,Courier and delivery scams
+http://electricity-bill-disconnection-officer.biz/pay,1,Phishing attacks
+http://security-google-verify-account.co/reset-password,1,OTP and PIN harvesting
+http://free-jio-5g-recharge-offer.tk/claim,1,Phishing attacks
+http://income-tax-refund-gov-in.servehttp.com/refund,1,Refund scams
+http://appleid-security-lockout-verify.net/signin,1,Phishing attacks
+http://netflix-billing-update-required.cc/update-card,1,Phishing attacks
+http://kbc-lottery-winner-officer-portal.ga/claim,1,Lottery and prize scams
+http://airtel-5g-sim-kyc-renewal.ml/activate,1,Fake KYC updates
+http://axis-bank-netbanking-reverification.club/auth,1,Fake KYC updates

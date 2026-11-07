@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}User Dashboard - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Header & Actions -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <h1 style="font-size: 1.8rem;">Security Dashboard</h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Overview of analyzed communications and threat risk telemetry</p>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <a href="{{ url_for('scan.scan_page') }}" class="btn btn-primary">
+        + New Scan
+      </a>
+      <a href="{{ url_for('history.history_page') }}" class="btn btn-secondary">
+        View History
+      </a>
+    </div>
+  </div>
+
+  <!-- Metric Summary Cards -->
+  <div class="grid-4" style="margin-bottom: 28px;">
+    <div class="glass-card" style="padding: 20px;">
+      <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; margin-bottom: 6px;">Total Scans</div>
+      <div style="font-size: 2.2rem; font-weight: 800; color: #fff;">{{ total_scans }}</div>
+      <div style="font-size: 0.8rem; color: var(--cyan-light); margin-top: 4px;">Lifetime User Submissions</div>
+    </div>
+
+    <div class="glass-card" style="padding: 20px;">
+      <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; margin-bottom: 6px;">High / Critical Risks</div>
+      <div style="font-size: 2.2rem; font-weight: 800; color: var(--risk-critical);">{{ high_risk_count }}</div>
+      <div style="font-size: 0.8rem; color: #f87171; margin-top: 4px;">Scores 60–100 Flagged</div>
+    </div>
+
+    <div class="glass-card" style="padding: 20px;">
+      <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; margin-bottom: 6px;">Medium Risks</div>
+      <div style="font-size: 2.2rem; font-weight: 800; color: var(--risk-med);">{{ med_risk_count }}</div>
+      <div style="font-size: 0.8rem; color: #fbbf24; margin-top: 4px;">Scores 30–59 Flagged</div>
+    </div>
+
+    <div class="glass-card" style="padding: 20px;">
+      <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; margin-bottom: 6px;">Low Risks</div>
+      <div style="font-size: 2.2rem; font-weight: 800; color: var(--risk-low);">{{ low_risk_count }}</div>
+      <div style="font-size: 0.8rem; color: #34d399; margin-top: 4px;">Scores 0–29 Verified Safe</div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid-3" style="margin-bottom: 32px;">
+    <div class="glass-card">
+      <h3 style="font-size: 1rem; margin-bottom: 16px;">Scam Category Breakdown</h3>
+      <div style="height: 240px; position: relative;">
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="font-size: 1rem; margin-bottom: 16px;">Scans by Input Type</h3>
+      <div style="height: 240px; position: relative;">
+        <canvas id="scanTypeChart"></canvas>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="font-size: 1rem; margin-bottom: 16px;">7-Day Scanning Volume</h3>
+      <div style="height: 240px; position: relative;">
+        <canvas id="weeklyTrendChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Scan Activity -->
+  <div class="glass-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+      <h3 style="font-size: 1.1rem;">Recent Scan Activity</h3>
+      <a href="{{ url_for('history.history_page') }}" style="font-size: 0.85rem; font-weight: 600;">View All History &rarr;</a>
+    </div>
+
+    {% if recent_scans %}
+      <div class="table-responsive">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Input Preview</th>
+              <th>Predicted Category</th>
+              <th>Risk Score</th>
+              <th>Date & Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for scan in recent_scans %}
+              <tr>
+                <td>#{{ scan.id }}</td>
+                <td>
+                  <span class="badge" style="background: rgba(255,255,255,0.06); color: var(--text-muted);">
+                    {{ scan.scan_type.replace('_', ' ').capitalize() }}
+                  </span>
+                </td>
+                <td style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  {{ scan.input_preview }}
+                </td>
+                <td>
+                  {% if scan.result %}
+                    {{ scan.result.predicted_category }}
+                  {% else %}
+                    Pending
+                  {% endif %}
+                </td>
+                <td>
+                  {% if scan.result %}
+                    {% if scan.result.risk_score >= 80 %}
+                      <span class="badge badge-critical">{{ scan.result.risk_score }}/100</span>
+                    {% elif scan.result.risk_score >= 60 %}
+                      <span class="badge badge-high">{{ scan.result.risk_score }}/100</span>
+                    {% elif scan.result.risk_score >= 30 %}
+                      <span class="badge badge-medium">{{ scan.result.risk_score }}/100</span>
+                    {% else %}
+                      <span class="badge badge-low">{{ scan.result.risk_score }}/100</span>
+                    {% endif %}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td style="color: var(--text-dim); font-size: 0.82rem;">
+                  {{ scan.created_at.strftime('%Y-%m-%d %H:%M') }}
+                </td>
+                <td>
+                  <a href="{{ url_for('scan.view_result', scan_id=scan.id) }}" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-size: 0.8rem;">
+                    Inspect &rarr;
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="text-align: center; padding: 40px 0; color: var(--text-dim);">
+        <p>No scans performed yet.</p>
+        <a href="{{ url_for('scan.scan_page') }}" class="btn btn-primary" style="margin-top: 12px;">Run First Scan</a>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}About & Helpline - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 900px;">
+
+  <div style="text-align: center; margin-bottom: 36px;">
+    <div class="badge badge-low" style="margin-bottom: 12px;">SYSTEM ARCHITECTURE & HELPLINE</div>
+    <h1 style="font-size: 2.2rem; margin-bottom: 8px;">About ScamShield AI</h1>
+    <p style="color: var(--text-muted); font-size: 1rem;">
+      Advanced digital communications analysis and document fraud prevention framework
+    </p>
+  </div>
+
+  <!-- Emergency Notice Callout -->
+  <div class="glass-card" style="margin-bottom: 32px; border-left: 4px solid var(--risk-critical); padding: 24px;">
+    <h3 style="color: var(--risk-critical); font-size: 1.2rem; margin-bottom: 8px;">Emergency Cyber Fraud Response (India)</h3>
+    <p style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 12px;">
+      If you have recently shared OTPs, transferred funds to an unauthorized UPI handle, or are actively being threatened with a <strong>"Digital Arrest"</strong>:
+    </p>
+    <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+      <div>
+        <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase;">National Cybercrime Toll-Free Helpline</div>
+        <div style="font-size: 1.6rem; font-weight: 800; color: #fff;">1930</div>
+      </div>
+      <div>
+        <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase;">Official Cybercrime Reporting Portal</div>
+        <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" style="font-size: 1.2rem; font-weight: 700; color: var(--cyan-light);">
+          cybercrime.gov.in &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Scam Taxonomy -->
+  <div class="glass-card" style="margin-bottom: 32px; padding: 28px;">
+    <h2 style="font-size: 1.3rem; margin-bottom: 16px; color: #fff;">Supported Scam Categories</h2>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
+      ScamShield AI classifies incoming vectors against 14 documented cyber fraud categories commonly active across India:
+    </p>
+
+    <div class="grid-2" style="font-size: 0.9rem;">
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+        <li><strong style="color:var(--cyan-light);">1. Phishing attacks:</strong> Deceptive login portals and security alerts</li>
+        <li><strong style="color:var(--cyan-light);">2. Fake KYC updates:</strong> Threatening bank account or SIM deactivation</li>
+        <li><strong style="color:var(--cyan-light);">3. UPI payment fraud:</strong> PIN request to receive money / cashback traps</li>
+        <li><strong style="color:var(--cyan-light);">4. Fake job offers:</strong> Paid YouTube liking or task-based WFH scams</li>
+        <li><strong style="color:var(--cyan-light);">5. Loan scams:</strong> Zero-CIBIL instantaneous loan APK extortion</li>
+        <li><strong style="color:var(--cyan-light);">6. Lottery and prize scams:</strong> Unearned KBC or celebrity contest awards</li>
+        <li><strong style="color:var(--cyan-light);">7. Refund scams:</strong> Fake income tax or electricity refund portals</li>
+      </ul>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+        <li><strong style="color:var(--cyan-light);">8. Courier scams:</strong> India Post / FedEx parcel seized notification</li>
+        <li><strong style="color:var(--cyan-light);">9. Bank impersonation:</strong> Lookalike domains mimicking major banks</li>
+        <li><strong style="color:var(--cyan-light);">10. Government impersonation:</strong> Spoofed IT Department, CBI, or Police</li>
+        <li><strong style="color:var(--cyan-light);">11. Digital arrest threats:</strong> Coercive video call arrest pretexts</li>
+        <li><strong style="color:var(--cyan-light);">12. OTP & PIN harvesting:</strong> Direct credential extraction requests</li>
+        <li><strong style="color:var(--cyan-light);">13. Malicious URLs:</strong> Raw IP hostnames and suspicious TLDs</li>
+        <li><strong style="color:var(--cyan-light);">14. Fake invoice fraud:</strong> Altered supplier bank details & arithmetic discrepancies</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Technical Architecture & Security -->
+  <div class="glass-card" style="margin-bottom: 32px; padding: 28px;">
+    <h2 style="font-size: 1.3rem; margin-bottom: 16px; color: #fff;">Security Design & Privacy Policy</h2>
+    <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;">
+      <p>
+        &bull; <strong>Zero Execution & SSRF Immunity:</strong> URLs submitted for inspection are lexically analyzed without automated network navigation or server-side socket execution, eliminating Server-Side Request Forgery risks.
+      </p>
+      <p>
+        &bull; <strong>Immediate File Sanitization:</strong> Uploaded images and PDF invoices are immediately purged from local disk storage once OCR and textual parsing complete.
+      </p>
+      <p>
+        &bull; <strong>Credential Redaction:</strong> Extracted passwords, OTPs, and sensitive account details are redacted prior to database persistence and preview display.
+      </p>
+      <p>
+        &bull; <strong>Calibrated Risk Engine:</strong> Classifier raw logits are never presented directly to the user as absolute probabilities; composite scoring incorporates structural heuristic evidence and severity weights.
+      </p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

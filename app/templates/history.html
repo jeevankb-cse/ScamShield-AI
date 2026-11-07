@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Scan History - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Header -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <h1 style="font-size: 1.8rem;">Historical Scan Archive</h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Review and audit all scans submitted under your account</p>
+    </div>
+    <a href="{{ url_for('scan.scan_page') }}" class="btn btn-primary">
+      + New Scan
+    </a>
+  </div>
+
+  <!-- Search & Filter Controls -->
+  <div class="glass-card" style="margin-bottom: 24px; padding: 20px;">
+    <form method="GET" action="{{ url_for('history.history_page') }}" style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
+      <div style="flex: 2; min-width: 220px;">
+        <label class="form-label">Search Content or Category</label>
+        <input type="text" name="q" class="form-control" placeholder="Search keywords..." value="{{ search_query }}">
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <label class="form-label">Input Type</label>
+        <select name="type" class="form-control">
+          <option value="">All Types</option>
+          <option value="message" {% if active_type == 'message' %}selected{% endif %}>Message</option>
+          <option value="email" {% if active_type == 'email' %}selected{% endif %}>Email</option>
+          <option value="url" {% if active_type == 'url' %}selected{% endif %}>URL</option>
+          <option value="image" {% if active_type == 'image' %}selected{% endif %}>Image / OCR</option>
+          <option value="pdf_invoice" {% if active_type == 'pdf_invoice' %}selected{% endif %}>PDF Invoice</option>
+        </select>
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <label class="form-label">Risk Level</label>
+        <select name="risk" class="form-control">
+          <option value="">All Risk Levels</option>
+          <option value="Very High Risk" {% if active_risk == 'Very High Risk' %}selected{% endif %}>Very High Risk</option>
+          <option value="High Risk" {% if active_risk == 'High Risk' %}selected{% endif %}>High Risk</option>
+          <option value="Medium Risk" {% if active_risk == 'Medium Risk' %}selected{% endif %}>Medium Risk</option>
+          <option value="Low Risk" {% if active_risk == 'Low Risk' %}selected{% endif %}>Low Risk</option>
+        </select>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-secondary" style="height: 44px;">Filter Scans</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Results Table -->
+  <div class="glass-card">
+    {% if scans %}
+      <div class="table-responsive">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Preview</th>
+              <th>Category</th>
+              <th>Score</th>
+              <th>Risk Level</th>
+              <th>Timestamp</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for scan in scans %}
+              <tr>
+                <td>#{{ scan.id }}</td>
+                <td>
+                  <span class="badge" style="background: rgba(255,255,255,0.06); color: var(--text-muted);">
+                    {{ scan.scan_type.replace('_', ' ').capitalize() }}
+                  </span>
+                </td>
+                <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  {{ scan.input_preview }}
+                </td>
+                <td>{{ scan.result.predicted_category if scan.result else 'N/A' }}</td>
+                <td>
+                  <strong>{{ scan.result.risk_score if scan.result else '-' }}</strong>/100
+                </td>
+                <td>
+                  {% if scan.result %}
+                    {% if scan.result.risk_score >= 80 %}
+                      <span class="badge badge-critical">Very High</span>
+                    {% elif scan.result.risk_score >= 60 %}
+                      <span class="badge badge-high">High</span>
+                    {% elif scan.result.risk_score >= 30 %}
+                      <span class="badge badge-medium">Medium</span>
+                    {% else %}
+                      <span class="badge badge-low">Low</span>
+                    {% endif %}
+                  {% endif %}
+                </td>
+                <td style="color: var(--text-dim); font-size: 0.82rem;">
+                  {{ scan.created_at.strftime('%Y-%m-%d %H:%M') }}
+                </td>
+                <td>
+                  <a href="{{ url_for('scan.view_result', scan_id=scan.id) }}" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-size: 0.8rem;">
+                    Report &rarr;
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="text-align: center; padding: 48px 0; color: var(--text-dim);">
+        <p style="font-size: 1.1rem; margin-bottom: 8px;">No matching scan records found.</p>
+        <p style="font-size: 0.88rem;">Try adjusting your search criteria or submit a new communication for analysis.</p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

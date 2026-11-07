@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Create Account - ScamShield AI{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; margin-top: 24px;">
+  <div class="glass-card" style="padding: 36px 32px;">
+    <div style="text-align: center; margin-bottom: 28px;">
+      <div class="brand-icon" style="margin: 0 auto 16px; width: 44px; height: 44px; font-size: 1.2rem;">S</div>
+      <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Create Defender Account</h1>
+      <p style="color: var(--text-muted); font-size: 0.88rem;">Start protecting your communications with ScamShield AI</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('auth.register') }}">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" value="{{ username or '' }}" placeholder="johndoe" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" name="email" class="form-control" value="{{ email or '' }}" placeholder="john@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="At least 8 chars, 1 uppercase, 1 lowercase, 1 number" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" name="confirm_password" class="form-control" placeholder="Repeat your password" required>
+      </div>
+
+      <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 20px;">
+        By creating an account, you acknowledge that predictions are risk assessments and agree to our privacy terms.
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" style="padding: 12px;">Complete Registration</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 24px; font-size: 0.88rem; color: var(--text-muted);">
+      Already have an account? <a href="{{ url_for('auth.login') }}">Sign In</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}ScamShield AI - Intelligent Scam Detection & Fraud Prevention{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Hero Section -->
+  <section style="text-align: center; padding: 48px 0 64px;">
+    <div class="badge badge-low" style="margin-bottom: 20px; font-size: 0.82rem;">
+      CYBER DEFENSE PLATFORM &bull; INDIA REGION
+    </div>
+    <h1 style="font-size: 3rem; line-height: 1.15; max-width: 900px; margin: 0 auto 20px; background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Advanced AI-Powered Scam Detection & Fraud Prevention
+    </h1>
+    <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 720px; margin: 0 auto 36px;">
+      Detect phishing messages, suspicious UPI requests, malicious URLs, fake invoices, and digital arrest threats using machine learning, NLP, and explainable cybersecurity heuristics.
+    </p>
+
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="{{ url_for('scan.scan_page') }}" class="btn btn-primary" style="padding: 14px 28px; font-size: 1rem;">
+        Launch Free Scanner &rarr;
+      </a>
+      {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.register') }}" class="btn btn-secondary" style="padding: 14px 28px; font-size: 1rem;">
+          Create Free Account
+        </a>
+      {% else %}
+        <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-secondary" style="padding: 14px 28px; font-size: 1rem;">
+          Open Dashboard
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Live Metrics Strip -->
+    <div style="display: flex; justify-content: center; gap: 48px; margin-top: 56px; flex-wrap: wrap;">
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; font-weight: 800; color: #fff;">{{ total_scans }}</div>
+        <div style="font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase;">Analyzed Artifacts</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; font-weight: 800; color: var(--risk-critical);">{{ high_threats }}</div>
+        <div style="font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase;">Threats Flagged</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; font-weight: 800; color: var(--cyan-light);">14</div>
+        <div style="font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase;">Scam Categories</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; font-weight: 800; color: var(--risk-low);">100%</div>
+        <div style="font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase;">SSRF Protected</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 Core Scanners Grid -->
+  <section style="margin-bottom: 64px;">
+    <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 36px;">Comprehensive Multi-Modal Scanners</h2>
+    <div class="grid-3">
+
+      <!-- Scanner 1 -->
+      <div class="glass-card">
+        <div style="font-size: 1.8rem; margin-bottom: 12px; color: var(--cyan-light);">&#9993;</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">SMS & WhatsApp Scanner</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
+          NLP-based analysis of text messages, detecting urgency coercion, fake KYC updates, UPI PIN requests, and deceptive embedded links.
+        </p>
+        <a href="{{ url_for('scan.scan_page', tab='message') }}" style="font-size: 0.85rem; font-weight: 600;">Test Message &rarr;</a>
+      </div>
+
+      <!-- Scanner 2 -->
+      <div class="glass-card">
+        <div style="font-size: 1.8rem; margin-bottom: 12px; color: var(--cyan-light);">&#128231;</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Email Phishing Scanner</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
+          Inspects sender domains, lookalike typosquatting, free webmail impersonation, subject urgency, and deceptive refund notifications.
+        </p>
+        <a href="{{ url_for('scan.scan_page', tab='email') }}" style="font-size: 0.85rem; font-weight: 600;">Test Email &rarr;</a>
+      </div>
+
+      <!-- Scanner 3 -->
+      <div class="glass-card">
+        <div style="font-size: 1.8rem; margin-bottom: 12px; color: var(--cyan-light);">&#127760;</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Lexical URL Analyzer</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
+          Evaluates 15 lexical features including raw IP hostnames, excessive subdomains, brand keywords, and high-abuse TLDs without SSRF risk.
+        </p>
+        <a href="{{ url_for('scan.scan_page', tab='url') }}" style="font-size: 0.85rem; font-weight: 600;">Test URL &rarr;</a>
+      </div>
+
+      <!-- Scanner 4 -->
+      <div class="glass-card">
+        <div style="font-size: 1.8rem; margin-bottom: 12px; color: var(--cyan-light);">&#128247;</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">OCR Screenshot Scanner</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
+          Extracts suspicious text from images and screenshots using OpenCV preprocessing and Tesseract OCR for automated classification.
+        </p>
+        <a href="{{ url_for('scan.scan_page', tab='image') }}" style="font-size: 0.85rem; font-weight: 600;">Upload Image &rarr;</a>
+      </div>
+
+      <!-- Scanner 5 -->
+      <div class="glass-card">
+        <div style="font-size: 1.8rem; margin-bottom: 12px; color: var(--cyan-light);">&#128196;</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">PDF Invoice Validator</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
+          Parses invoices via PyMuPDF, validates Indian GSTIN format, cross-verifies line-item arithmetic, and flags unverified bank account changes.
+        </p>
+        <a href="{{ url_for('scan.scan_page', tab='pdf') }}" style="font-size: 0.85rem; font-weight: 600;">Verify Invoice &rarr;</a>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="glass-card">
+        <div style="font-size: 1.8rem; margin-bottom: 12px; color: var(--cyan-light);">&#128737;</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Central Risk Engine</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
+          0–100 normalized risk score calibrated with evidence severity, actionable safety advice, and Indian Cybercrime helpline guidance.
+        </p>
+        <a href="{{ url_for('dashboard.about') }}" style="font-size: 0.85rem; font-weight: 600;">Learn More &rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+{% endblock %}
