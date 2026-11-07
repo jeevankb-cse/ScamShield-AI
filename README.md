@@ -9,6 +9,24 @@
 **ScamShield AI** is an enterprise-grade cybersecurity web application built to analyze suspicious digital communications and documents commonly encountered across India. The platform analyzes SMS messages, WhatsApp chats, emails, URLs, screenshots, and PDF invoices to identify fraudulent patterns, assign a calibrated risk score (0–100), explain warning indicators, and deliver actionable safety recommendations.
 
 ---
+## 👨‍💻 Author
+
+**Jeevan K B**
+
+Department of Computer Science and Engineering (CSE)  
+City Engineering College, Bengaluru, Karnataka, India.
+
+### Project
+
+**ScamShield AI — AI-Powered Scam Detection and Fraud Prevention Platform**
+
+Developed as an academic project to explore machine learning, cybersecurity, NLP and digital fraud detection.
+
+### Connect
+
+- GitHub: [jeevankb-cse](https://github.com/jeevankb-cse)
+- Repository: [ScamShield-AI](https://github.com/jeevankb-cse/ScamShield-AI)
+
 
 ## 📑 Table of Contents
 
